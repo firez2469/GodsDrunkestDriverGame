@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8634016483825620125
+--- !u!114 &-7418174708610957957
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +31,7 @@ MonoBehaviour:
   fogType:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &-1861754328145813293
+--- !u!114 &-1339875196165667171
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Value: 50
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 25
+    m_Value: 40
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   depthExtent:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 64
   denoisingMode:
     m_OverrideState: 0
@@ -132,5 +132,5 @@ MonoBehaviour:
   m_Name: DarknessVolume
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -1861754328145813293}
-  - {fileID: -8634016483825620125}
+  - {fileID: -1339875196165667171}
+  - {fileID: -7418174708610957957}
