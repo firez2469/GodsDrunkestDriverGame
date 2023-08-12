@@ -15,8 +15,10 @@ public class RoadGate : MonoBehaviour
 
 
     void OnTriggerEnter(Collider other) {
-        
-        //if other is player:
-        //alert parent
+        Debug.Log("COLLLIDDDEEE WITH " + other.gameObject.name);
+        if(other.gameObject.name == "player") {
+            parent.roadTrigger();
+            Destroy(gameObject);
+        }
     }
 }

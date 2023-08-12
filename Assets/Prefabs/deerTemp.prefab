@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7237819771788903454}
   - component: {fileID: 7066230978836576161}
   - component: {fileID: 7621626959877421636}
+  - component: {fileID: 1785881671046425009}
   m_Layer: 0
   m_Name: deerTemp
   m_TagString: Untagged
@@ -122,6 +123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleTime: 5
+  launchForce: 10
+  yLaunchForce: 20
+  pointValue: 0
+  dayLaunchForce: 30
+  dayYLaunchForce: 4
+  carDamage: 75
 --- !u!195 &7621626959877421636
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -144,3 +151,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!54 &1785881671046425009
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201489591856706077}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2

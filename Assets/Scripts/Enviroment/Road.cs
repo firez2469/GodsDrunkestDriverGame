@@ -5,27 +5,33 @@ using UnityEngine;
 //handles behavior of each road segment (spawning AI, detecting when player has left the segment, swaping sprites)
 public class Road : MonoBehaviour
 {
+    RoadsController parent;
     Vector3 corner;
     float spawnXRange;
     float spawnZRange;
+
+    List<AIController> ai;
 
     public GameObject humanPrefab;
     public GameObject rabbitPrefab;
     public GameObject deerPrefab;
 
+    bool day;
+
     public GameObject AIContainer;
 
-    void Start()
+    void Awake()
     {
+        parent = GetComponentInParent<RoadsController>();
+        ai = new List<AIController>();
+        day = false;
+
         corner = new Vector3(transform.position.x - transform.localScale.x/2,
                  transform.position.y + transform.localScale.y/2,
                  transform.position.z - transform.localScale.z/2);
         spawnXRange = transform.localScale.x;
         spawnZRange = transform.localScale.z;
         AIContainer.transform.position = corner;
-        Debug.Log(corner);
-        Debug.Log(AIContainer.transform.position);
-        Debug.Log(spawnXRange);
         spawnAI();
     }
 
@@ -50,25 +56,40 @@ public class Road : MonoBehaviour
             }
         }
 
-        Debug.Log(spawns.Count);
-        Debug.Log(spawns[0]);
-        Debug.Log(spawns[1]);
-        Debug.Log(spawns[2]); 
-        Instantiate(humanPrefab, spawns[0], Quaternion.identity, AIContainer.transform)
-                .GetComponent<AIController>().startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
-        Instantiate(rabbitPrefab, spawns[1], Quaternion.identity, AIContainer.transform)
-                .GetComponent<AIController>().startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
-        Instantiate(deerPrefab, spawns[2], Quaternion.identity, AIContainer.transform)
-                .GetComponent<AIController>().startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
+        //will abstract later am lazy
+        AIController human = Instantiate(humanPrefab, spawns[0], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
+        ai.Add(human);
+        human.swapEnviroment(day);
+        human.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
 
+        AIController rabbit = Instantiate(rabbitPrefab, spawns[1], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
+        ai.Add(rabbit);
+        rabbit.swapEnviroment(day);
+        rabbit.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
+
+        AIController deer = Instantiate(deerPrefab, spawns[2], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
+        ai.Add(deer);
+        deer.swapEnviroment(day);
+        deer.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
     }
 
-    public void swapEnviroment() {
+    public void swapEnviroment(bool time) {
+        day = time;
+        //swap enviroment here
 
+        //swap enviroment on every ai
+
+        foreach(AIController thing in ai) {
+            thing.swapEnviroment(day);
+        }
     }
 
     public void removeRoad() {
         Destroy(gameObject);
+    }
+
+    public void roadTrigger() {
+        parent.extendRoad();
     }
 
 

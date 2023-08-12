@@ -6,6 +6,8 @@ using UnityEngine;
 public class RoadsController : MonoBehaviour
 {
 
+    bool day;
+
     List<Road> roads;
     public GameObject roadPrefab;
 
@@ -20,6 +22,7 @@ public class RoadsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        day = false;
         nextRoadPos = new Vector3(0,0,roadPrefab.transform.localScale.z);
         roads = new List<Road>();
         
@@ -32,15 +35,19 @@ public class RoadsController : MonoBehaviour
 
     //will handle enviroment swap for all AI and road segments
     public void swapEnviroment() {
+        day = !day;
         foreach(Road r in roads) {
-            r.swapEnviroment();
+            r.swapEnviroment(day);
         }
     }
 
     public void Update() {
-        if(readyForNextRoad) {
-            Invoke(nameof(extendRoad), 5.0f);
-            readyForNextRoad = false;
+        // if(readyForNextRoad) {
+        //     Invoke(nameof(extendRoad), 5.0f);
+        //     readyForNextRoad = false;
+        // }
+        if(Input.GetKey(KeyCode.Space)) {
+            swapEnviroment();
         }
         
     }
@@ -51,6 +58,8 @@ public class RoadsController : MonoBehaviour
 
 
         roads.Add(newRoadScript);
+        newRoadScript.swapEnviroment(day);
+
         if(roads.Count > maxSegments) {
             Road bye = roads[0];
             roads.RemoveAt(0);

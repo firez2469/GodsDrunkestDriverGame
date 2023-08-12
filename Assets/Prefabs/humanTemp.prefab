@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1796813013873846783}
   - component: {fileID: 2175131951247683266}
   - component: {fileID: 6434560024693492871}
+  - component: {fileID: -6157278025105884945}
   m_Layer: 0
   m_Name: humanTemp
   m_TagString: Untagged
@@ -122,6 +123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleTime: 3
+  launchForce: 16
+  yLaunchForce: 4
+  pointValue: 0
+  dayLaunchForce: 3
+  dayYLaunchForce: 25
+  carDamage: 25
 --- !u!195 &6434560024693492871
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -144,3 +151,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!54 &-6157278025105884945
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450092674721919223}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
