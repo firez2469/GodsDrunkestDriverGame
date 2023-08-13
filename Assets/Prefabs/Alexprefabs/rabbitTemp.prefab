@@ -125,9 +125,11 @@ MonoBehaviour:
   idleTime: 0.3
   launchForce: 10
   yLaunchForce: 2
+  darkmass: 0.2
   carDamage: 10
   dayLaunchForce: 15
   dayYLaunchForce: 6
+  daymass: 1.5
   pointValue: 20
 --- !u!195 &7057205520079758831
 NavMeshAgent:

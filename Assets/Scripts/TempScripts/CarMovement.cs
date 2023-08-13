@@ -24,7 +24,7 @@ public class CarMovement : MonoBehaviour
     public LayerMask obstacleLayer;
     public float maxForceBoost;
     Quaternion uprightRotationTarget;
-    public float oppositeForce;
+    public float oppositeForce; //gonna just use 3* sqrt(speed)
     public float oppositeCollisionYForce;
     float lastCollision;
     public float collisionCooldown;
@@ -187,7 +187,7 @@ public class CarMovement : MonoBehaviour
         if(((1 <<collision.gameObject.layer) & obstacleLayer) != 0) {
             Vector3 direction = transform.position - collision.gameObject.transform.position;
             direction.y = 0;
-            rigid.AddForce(direction.normalized * oppositeForce + Vector3.up * oppositeCollisionYForce, ForceMode.Impulse);
+            rigid.AddForce(direction.normalized * 3.0f * (float)Mathf.Sqrt(speed) + Vector3.up * oppositeCollisionYForce, ForceMode.Impulse);
         }
     }
 }

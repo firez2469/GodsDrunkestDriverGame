@@ -19,7 +19,6 @@ public class Road : MonoBehaviour
     public GameObject lowBoundMarker;
     public GameObject highBoundMarker;
 
-    public int AICount;
 
     Vector3 lowBound;
     Vector3 highBound;
@@ -40,10 +39,10 @@ public class Road : MonoBehaviour
     }
 
     //for now will be hardcoded to one of each
-    public void spawnAI() {
+    public void spawnAI(int count) {
         List<Vector3> spawns = new List<Vector3>();
 
-        for(int i = 0; i < AICount; i++) {
+        for(int i = 0; i < count; i++) {
             bool foundValid = false;
             while(!foundValid) { // this is a bit silly D:
                 Vector3 spawnLocation = new Vector3(Random.Range(lowBound.x, highBound.x), lowBound.y, Random.Range(lowBound.z, highBound.z));
@@ -60,7 +59,7 @@ public class Road : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < AICount; i++) {
+        for(int i = 0; i < count; i++) {
             GameObject willUse;
             int selected = Random.Range(0,3);
             if(selected == 0) {

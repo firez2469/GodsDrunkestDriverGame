@@ -23,12 +23,14 @@ public class AIController : MonoBehaviour
     [Header ("DARK")]
     public float launchForce;
     public float yLaunchForce;
+    public float darkmass;
 
     public int carDamage;
 
     [Header ("FANTASY")]
     public float dayLaunchForce;
     public float dayYLaunchForce;
+    public float daymass;
 
     public int pointValue;
 
@@ -97,8 +99,10 @@ public class AIController : MonoBehaviour
     public void swapEnviroment(WorldState time) {
         state = time;
         if(state == WorldState.DARK) {
+            rigid.mass = darkmass;
             //swap to dark skin
         } else {
+            rigid.mass = daymass;
             //swap to fantasy skin
         }
     }

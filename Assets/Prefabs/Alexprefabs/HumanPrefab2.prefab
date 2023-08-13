@@ -177,7 +177,9 @@ MonoBehaviour:
   idleTime: 3
   launchForce: 16
   yLaunchForce: 4
+  darkmass: 1
   carDamage: 25
   dayLaunchForce: 12
   dayYLaunchForce: 18
+  daymass: 0.3
   pointValue: 5
