@@ -5130,7 +5130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1626bc312f559a74fae97f6e6a6853a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 30
   maxSpeed: 250
   speedIncrease: 1.3
   turnSpeed: 1
@@ -5139,10 +5139,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   springStrength: 1600
-  stringDamper: 50
+  stringDamper: 25
+  rotSpringStrength: 1500
+  rotSpringDamper: 20
   maxForceBoost: 5
+  oppositeForce: 10
+  collisionCooldown: 0.5
   road: {fileID: 365461870}
-  tripTime: 10
+  tripTime: 999
   tripCooldown: 5
   maxHealth: 100
   pointsToHeal: 10

@@ -20,9 +20,14 @@ public class CarMovement : MonoBehaviour
     public float rotSpringStrength;
     public float rotSpringDamper;
 
-    Quaternion uprightRotationTarget;
-
     public float maxForceBoost;
+
+    Quaternion uprightRotationTarget;
+    public float oppositeForce;
+    float lastCollision;
+    public float collisionCooldown;
+
+    
 
     [Header ("tripping")]
     public RoadsController road;
@@ -44,16 +49,18 @@ public class CarMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uprightRotationTarget = transform.rotation;
+        
         score = 0;
         currentScore = 0;
         health = maxHealth;
 
         rigid = GetComponent<Rigidbody>();
-        rigid.freezeRotation = true;
+        uprightRotationTarget = rigid.rotation;
+        // rigid.freezeRotation = true;
 
         canTrip = true;
         state = WorldState.DARK;
+        lastCollision = Time.time;
     }
 
     // Update is called once per frame
@@ -90,6 +97,7 @@ public class CarMovement : MonoBehaviour
         rigid.velocity = new Vector3(xzSpeed.x, rigid.velocity.y, xzSpeed.z);
 
         rideGround();
+        carTorque();
     }
 
   
@@ -126,7 +134,7 @@ public class CarMovement : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, -transform.up, out hit, 200f, ~ignoreMe)) {
 
-            Debug.Log("HIT: " + hit.distance + ", " + hit.collider.gameObject.name);
+            // Debug.Log("HIT: " + hit.distance + ", " + hit.collider.gameObject.name);
             
 
             float rayDirVel = Vector3.Dot(-transform.up, rigid.velocity);
@@ -134,7 +142,7 @@ public class CarMovement : MonoBehaviour
             float x = hit.distance - distOffGround;
 
             float springForce = (x * springStrength) - (rayDirVel * stringDamper);
-            Debug.Log("SP STR: " + (x * springStrength) + ", DAMPER: " + (rayDirVel * stringDamper) + ", TOTAL: " + springForce + ", YVEL: " + rigid.velocity.y);
+            // Debug.Log("SP STR: " + (x * springStrength) + ", DAMPER: " + (rayDirVel * stringDamper) + ", TOTAL: " + springForce + ", YVEL: " + rigid.velocity.y);
 
             rigid.AddForce(-transform.up * springForce, ForceMode.Force);
 
@@ -147,11 +155,22 @@ public class CarMovement : MonoBehaviour
     public void carTorque() {
         // Quaternion goal = Utils.Math.ShortestRotation(uprightRotationTarget, transform.rotation);
 
+
         // Vector3 axis;
         // float rotationDegrees;
 
         // goal.ToAngleAxis(out rotationDegrees, out axis);
+        float rotationDegrees = Quaternion.Angle(rigid.rotation, uprightRotationTarget);
 
-        // rigid.AddTorque((axis * (rotationDegrees * Mathf.Deg2Rad * rotSpringStrength)) - (rigid.angularVelocity * rotSpringDamper));
+        Debug.Log("ROT: " + rigid.rotation + ", targ " + uprightRotationTarget + ", amountOfDeegs" + rotationDegrees);
+        Vector3 direction =  Vector3.Cross(Vector3.up, transform.up);
+
+        Debug.Log("DIRECTION: " + direction);
+
+        rigid.AddTorque((-direction * (rotationDegrees * Mathf.Deg2Rad * rotSpringStrength)) - (rigid.angularVelocity * rotSpringDamper));
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        Debug.Log("WHAP:" + collision.gameObject.name);
     }
 }
