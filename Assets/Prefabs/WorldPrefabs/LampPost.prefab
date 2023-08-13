@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9128891035689872622}
   - component: {fileID: 8669753260834495375}
   - component: {fileID: 8552182499730135819}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3385461756031490529}
   - component: {fileID: 2852173285427559100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LampPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 6932719904961975627}
   - component: {fileID: 4170655415139433364}
   - component: {fileID: 922048526842095968}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,6 +553,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0a1645d739ec2c8479de881de329b78b, type: 3}
       propertyPath: m_Name
       value: LampPost
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0a1645d739ec2c8479de881de329b78b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

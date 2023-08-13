@@ -10,24 +10,24 @@ public class CarMovement : MonoBehaviour
     public float maxSpeed;
     public float speedIncrease;
     public float turnSpeed;
+    public float friction;
 
-    [Header ("gravity bounce and collisions")]
+    [Header ("gravity bounce")]
     public float distOffGround;
     public LayerMask ignoreMe;
     public float springStrength;
     public float stringDamper;
-
     public float rotSpringStrength;
     public float rotSpringDamper;
 
+    [Header ("collisions")]
+    public LayerMask obstacleLayer;
     public float maxForceBoost;
-
     Quaternion uprightRotationTarget;
     public float oppositeForce;
+    public float oppositeCollisionYForce;
     float lastCollision;
     public float collisionCooldown;
-
-    
 
     [Header ("tripping")]
     public RoadsController road;
@@ -55,6 +55,7 @@ public class CarMovement : MonoBehaviour
         health = maxHealth;
 
         rigid = GetComponent<Rigidbody>();
+        rigid.drag = friction;
         uprightRotationTarget = rigid.rotation;
         // rigid.freezeRotation = true;
 
@@ -66,7 +67,7 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        capSpeed();
         if(Input.GetKeyDown(KeyCode.Q)) {
             transform.position = new Vector3(transform.position.x,transform.position.y + 2,transform.position.z);
         }
@@ -77,6 +78,15 @@ public class CarMovement : MonoBehaviour
             this.boostSpeed(state);
             Invoke(nameof(exitTrip), tripTime);
         }
+    }
+
+    void capSpeed() {
+        Vector3 xzSpeed = rigid.velocity;
+        xzSpeed.y = 0;
+        if(xzSpeed.magnitude > speed) {
+            xzSpeed = xzSpeed.normalized * speed;
+        }
+        rigid.velocity = new Vector3(xzSpeed.x, rigid.velocity.y, xzSpeed.z);
     }
 
     void exitTrip() {
@@ -93,8 +103,11 @@ public class CarMovement : MonoBehaviour
     void FixedUpdate() {
 
         rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, Input.GetAxis("Horizontal") * turnSpeed, 0f));
-        Vector3 xzSpeed = speed * transform.right.normalized;
-        rigid.velocity = new Vector3(xzSpeed.x, rigid.velocity.y, xzSpeed.z);
+        rigid.AddForce(transform.right * speed, ForceMode.Force);
+        Debug.Log("FORWARD: " + transform.forward);
+
+        // Vector3 xzSpeed = speed * transform.right.normalized;
+        // rigid.velocity = new Vector3(xzSpeed.x, rigid.velocity.y, xzSpeed.z);
 
         rideGround();
         carTorque();
@@ -171,6 +184,10 @@ public class CarMovement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision) {
-        Debug.Log("WHAP:" + collision.gameObject.name);
+        if(((1 <<collision.gameObject.layer) & obstacleLayer) != 0) {
+            Vector3 direction = transform.position - collision.gameObject.transform.position;
+            direction.y = 0;
+            rigid.AddForce(direction.normalized * oppositeForce + Vector3.up * oppositeCollisionYForce, ForceMode.Impulse);
+        }
     }
 }
