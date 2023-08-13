@@ -6,9 +6,6 @@ using UnityEngine;
 public class Road : MonoBehaviour
 {
     RoadsController parent;
-    Vector3 corner;
-    float spawnXRange;
-    float spawnZRange;
 
     List<AIController> ai;
 
@@ -16,7 +13,16 @@ public class Road : MonoBehaviour
     public GameObject rabbitPrefab;
     public GameObject deerPrefab;
 
-    bool day;
+    public GameObject fantasyRoad;
+    public GameObject darkRoad;
+
+    public GameObject lowBoundMarker;
+    public GameObject highBoundMarker;
+
+    Vector3 lowBound;
+    Vector3 highBound;
+
+    WorldState state;
 
     public GameObject AIContainer;
 
@@ -24,15 +30,11 @@ public class Road : MonoBehaviour
     {
         parent = GetComponentInParent<RoadsController>();
         ai = new List<AIController>();
-        day = false;
 
-        corner = new Vector3(transform.position.x - transform.localScale.x/2,
-                 transform.position.y + transform.localScale.y/2,
-                 transform.position.z - transform.localScale.z/2);
-        spawnXRange = transform.localScale.x;
-        spawnZRange = transform.localScale.z;
-        AIContainer.transform.position = corner;
-        spawnAI();
+        lowBound = lowBoundMarker.transform.position;
+        highBound = highBoundMarker.transform.position;
+
+        AIContainer.transform.position = lowBound;
     }
 
     //for now will be hardcoded to one of each
@@ -42,7 +44,7 @@ public class Road : MonoBehaviour
         for(int i = 0; i < 3; i++) {
             bool foundValid = false;
             while(!foundValid) { // this is a bit silly D:
-                Vector3 spawnLocation = new Vector3(Random.Range(corner.x, corner.x+spawnXRange), corner.y, Random.Range(corner.z, corner.z+spawnZRange));
+                Vector3 spawnLocation = new Vector3(Random.Range(lowBound.x, highBound.x), lowBound.y, Random.Range(lowBound.z, highBound.z));
                 foundValid = true;
                 foreach(Vector3 spawn in spawns) {
                     if(Vector3.Distance(spawnLocation, spawn) < 5) {
@@ -59,28 +61,32 @@ public class Road : MonoBehaviour
         //will abstract later am lazy
         AIController human = Instantiate(humanPrefab, spawns[0], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
         ai.Add(human);
-        human.swapEnviroment(day);
-        human.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
+        human.swapEnviroment(state);
+        human.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
 
         AIController rabbit = Instantiate(rabbitPrefab, spawns[1], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
         ai.Add(rabbit);
-        rabbit.swapEnviroment(day);
-        rabbit.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
+        rabbit.swapEnviroment(state);
+        rabbit.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
 
         AIController deer = Instantiate(deerPrefab, spawns[2], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
         ai.Add(deer);
-        deer.swapEnviroment(day);
-        deer.startWander(corner.x, corner.x + spawnXRange, corner.z,corner.z + spawnZRange);
+        deer.swapEnviroment(state);
+        deer.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
     }
 
-    public void swapEnviroment(bool time) {
-        day = time;
-        //swap enviroment here
-
-        //swap enviroment on every ai
+    public void swapEnviroment(WorldState time) {
+        state = time;
+        if(state == WorldState.DARK) {
+            darkRoad.SetActive(true);
+            fantasyRoad.SetActive(false);
+        } else {
+            darkRoad.SetActive(false);
+            fantasyRoad.SetActive(true);
+        }
 
         foreach(AIController thing in ai) {
-            thing.swapEnviroment(day);
+            thing.swapEnviroment(state);
         }
     }
 

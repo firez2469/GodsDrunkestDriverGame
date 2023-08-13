@@ -42,4 +42,3 @@ public class WorldStateManager : MonoBehaviour
         }
     }
 }
-public enum WorldState { DARK,FANTASY}

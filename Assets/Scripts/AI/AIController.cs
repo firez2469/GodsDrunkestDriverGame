@@ -14,18 +14,18 @@ public class AIController : MonoBehaviour
 
     bool launched;
     
-    bool day;
+    WorldState state;
 
     [Header ("general")]
     public float idleTime;
 
-    [Header ("night")]
+    [Header ("DARK")]
     public float launchForce;
     public float yLaunchForce;
 
     public int pointValue;
 
-    [Header ("day")]
+    [Header ("FANTASY")]
     public float dayLaunchForce;
     public float dayYLaunchForce;
 
@@ -34,7 +34,6 @@ public class AIController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        day = false;
         lastLaunch = 0;
         traveling = false;
         launchCooldown = .5f;
@@ -77,8 +76,8 @@ public class AIController : MonoBehaviour
             launched = true;
             rigid.freezeRotation = false;
 
-            float launchStrength = day ? dayLaunchForce : launchForce;
-            float yLaunchStrength = day ? dayYLaunchForce : yLaunchForce;
+            float launchStrength = (state == WorldState.FANTASY) ? dayLaunchForce : launchForce;
+            float yLaunchStrength = (state == WorldState.FANTASY) ? dayYLaunchForce : yLaunchForce;
 
             Vector3 launchVec = transform.position - collision.gameObject.transform.position;
             launchVec.y = 0;
@@ -91,8 +90,13 @@ public class AIController : MonoBehaviour
 
     }
 
-    public void swapEnviroment(bool time) {
-        day = time;
+    public void swapEnviroment(WorldState time) {
+        state = time;
+        if(state == WorldState.DARK) {
+            //swap to dark skin
+        } else {
+            //swap to fantasy skin
+        }
     }
 
 }

@@ -6,13 +6,13 @@ using UnityEngine;
 public class RoadsController : MonoBehaviour
 {
 
-    bool day;
+    WorldState state;
 
     List<Road> roads;
     public GameObject roadPrefab;
 
     public int maxSegments;
-    public int initialSegments;
+    public int AISpawnDistance;
     Vector3 nextRoadPos;
 
 
@@ -22,12 +22,19 @@ public class RoadsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        day = false;
-        nextRoadPos = new Vector3(0,0,roadPrefab.transform.localScale.z);
+        state = WorldState.DARK;
+        nextRoadPos = new Vector3(0,0,0);
         roads = new List<Road>();
         
-        for(int i = 0; i < initialSegments; i++) {
+        for(int i = 0; i < maxSegments; i++) {
             extendRoad();
+            Debug.Log("?????");
+        }
+
+        Debug.Log(roads.Count);
+
+        for(int i = 0; i < AISpawnDistance; i++) {
+            roads[i].spawnAI();
         }
 
         readyForNextRoad = true;
@@ -35,9 +42,9 @@ public class RoadsController : MonoBehaviour
 
     //will handle enviroment swap for all AI and road segments
     public void swapEnviroment() {
-        day = !day;
+        state = (state == WorldState.FANTASY) ? WorldState.DARK : WorldState.FANTASY;
         foreach(Road r in roads) {
-            r.swapEnviroment(day);
+            r.swapEnviroment(state);
         }
     }
 
@@ -46,7 +53,7 @@ public class RoadsController : MonoBehaviour
         //     Invoke(nameof(extendRoad), 5.0f);
         //     readyForNextRoad = false;
         // }
-        if(Input.GetKey(KeyCode.Space)) {
+        if(Input.GetKeyDown(KeyCode.Space)) {
             swapEnviroment();
         }
         
@@ -56,17 +63,22 @@ public class RoadsController : MonoBehaviour
         GameObject newRoad = Instantiate(roadPrefab, nextRoadPos, Quaternion.identity, transform);
         Road newRoadScript = newRoad.GetComponent<Road>();
 
-
         roads.Add(newRoadScript);
-        newRoadScript.swapEnviroment(day);
-
+        newRoadScript.swapEnviroment(state);
+        
         if(roads.Count > maxSegments) {
             Road bye = roads[0];
             roads.RemoveAt(0);
             bye.removeRoad();
         }
+        
+        if(roads.Count >= AISpawnDistance) {
+            roads[AISpawnDistance-1].spawnAI();
+        }
 
-        nextRoadPos = new Vector3(nextRoadPos.x,nextRoadPos.y,nextRoadPos.z + roadPrefab.transform.localScale.z);
+        nextRoadPos = new Vector3(nextRoadPos.x,nextRoadPos.y,nextRoadPos.z + 100);
         readyForNextRoad = true;
     }
 }
+
+public enum WorldState { DARK,FANTASY}
