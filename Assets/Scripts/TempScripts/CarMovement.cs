@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CarMovement : MonoBehaviour
 {
@@ -60,6 +61,8 @@ public class CarMovement : MonoBehaviour
     public Transform textPosition;
     public Transform textParent;
 
+    TiredHandler tired;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +79,8 @@ public class CarMovement : MonoBehaviour
         canTrip = true;
         state = WorldState.DARK;
         lastCollision = Time.time;
+
+        tired = GetComponent<TiredHandler>();
     }
 
     // Update is called once per frame
@@ -88,10 +93,19 @@ public class CarMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && canTrip) {
             canTrip = false;
             state = WorldState.FANTASY;
-            road.swapEnviroment(state);
             this.swapState(state);
-            Invoke(nameof(exitTrip), tripTime);
+            
+            Invoke(nameof(swapFantasy), 4.5f);
         }
+
+        if(health < 0) {
+            endRun();
+        }
+    }
+
+    void swapFantasy() {
+        road.swapEnviroment(state);
+        Invoke(nameof(exitTrip), tripTime);
     }
 
     void capSpeed() {
@@ -135,9 +149,8 @@ public class CarMovement : MonoBehaviour
                 speed = maxSpeed;
             }
 
-            // ScoreText.SetActive(true);
-            // multiplierText.SetActive(true);
-            // newScoreText.SetActive(true);
+            tired.SetPause(true);
+            tired.ResetTired();
 
         } else {
             if(currentScore > pointsToHeal){
@@ -148,9 +161,7 @@ public class CarMovement : MonoBehaviour
 
                 currentScore = 0;
             }
-            // ScoreText.SetActive(false);
-            // multiplierText.SetActive(false);
-            // newScoreText.SetActive(false);
+            tired.SetPause(false);
         } 
     }
 
@@ -230,5 +241,10 @@ public class CarMovement : MonoBehaviour
             direction.y = 0;
             rigid.AddForce(direction.normalized * 3.0f * (float)Mathf.Sqrt(speed) + Vector3.up * oppositeCollisionYForce, ForceMode.Impulse);
         }
+    }
+
+    void endRun() {
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadScene("MainMenu");
     }
 }

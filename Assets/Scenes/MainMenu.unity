@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 32792.69, g: 11697.024, b: 21574.002, a: 1}
+  m_IndirectSpecularColor: {r: 32790.652, g: 11687.112, b: 21560.531, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 6071775404091479828, guid: 51fed2851640b6c4b970d20c83c017b5, type: 3}
-  backCliff: {fileID: 0}
+  backCliff: {fileID: 1362582047}
   maxSegments: 6
   initialSegments: 4
   AISpawnDistance: 4
@@ -1247,9 +1247,9 @@ MonoBehaviour:
   fantasyVolume: {fileID: 1006924047}
   carcamms: {fileID: 429899099}
   stateSwapsTillSpawn: 0
-  initialCount: 0
-  countMultiplier: 0
-  maxCount: 0
+  initialCount: 2
+  countMultiplier: 1
+  maxCount: 2
 --- !u!4 &365461871
 Transform:
   m_ObjectHideFlags: 0
@@ -4967,6 +4967,37 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1362582047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1362582048}
+  m_Layer: 0
+  m_Name: backcliffplaceholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1362582048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362582047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -46.924255, y: 26.54326, z: -109.335655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1370917137
 GameObject:
   m_ObjectHideFlags: 0
@@ -5777,6 +5808,11 @@ MonoBehaviour:
   tripCooldown: 0
   maxHealth: 100
   pointsToHeal: 10
+  obstacleDamage: 0
+  scoreStreakTime: 0
+  scoreTextPrefab: {fileID: 0}
+  textPosition: {fileID: 0}
+  textParent: {fileID: 0}
 --- !u!4 &1647088097
 Transform:
   m_ObjectHideFlags: 0
@@ -7268,3 +7304,4 @@ SceneRoots:
   - {fileID: 847612716}
   - {fileID: 1432477318}
   - {fileID: 1723225301}
+  - {fileID: 1362582048}

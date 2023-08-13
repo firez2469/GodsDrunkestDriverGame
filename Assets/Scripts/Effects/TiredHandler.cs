@@ -19,12 +19,18 @@ public class TiredHandler : MonoBehaviour
     private float _timeUntilAsleep;
     private bool isPaused = false;
 
+    [SerializeField]
+    private GameObject flask;
+    private Animator flaskAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         darkVolume.profile.TryGet<Vignette>(out vignetteDark);
         darkVolume.profile.TryGet<ColorAdjustments>(out adjustment);
         _timeUntilAsleep = timeUntilAsleep;
+
+        flaskAnimator = flask.GetComponent<Animator>();
     }
 
     
@@ -48,9 +54,12 @@ public class TiredHandler : MonoBehaviour
     public void SetPause(bool pause)
     {
         this.isPaused = pause;
+        flask.SetActive(false);
     }
     public void ResetTired()
     {
+        flask.SetActive(true); //really scuffed but p sure fixes a visual bug
+        flaskAnimator.SetTrigger("Drink");
         this._timeUntilAsleep = timeUntilAsleep;
     }
 }
