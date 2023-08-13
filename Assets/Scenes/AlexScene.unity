@@ -975,14 +975,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 6071775404091479828, guid: 51fed2851640b6c4b970d20c83c017b5, type: 3}
-  darkVolume: {fileID: 1535678312}
-  fantasyVolume: {fileID: 1006924047}
-  player: {fileID: 1647088096}
-  carcamms: {fileID: 429899099}
+  backCliff: {fileID: 916526659}
   maxSegments: 6
   initialSegments: 4
   AISpawnDistance: 4
-  backCliff: {fileID: 916526659}
+  darkVolume: {fileID: 1535678312}
+  fantasyVolume: {fileID: 1006924047}
+  carcamms: {fileID: 429899099}
+  stateSwapsTillSpawn: 1
+  initialCount: 2
+  countMultiplier: 1.5
+  maxCount: 6
 --- !u!4 &365461871
 Transform:
   m_ObjectHideFlags: 0
