@@ -7619,13 +7619,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   humanPrefab: {fileID: 1770564980780125560, guid: 7844ecda880695445aa678098d643e1f, type: 3}
-  rabbitPrefab: {fileID: 685840857877955043, guid: ccc967dff79f8e44f9639f65b2c9d68e, type: 3}
-  deerPrefab: {fileID: 6201489591856706077, guid: 8ad05031bb1323d47a56313bae155cad, type: 3}
+  rabbitPrefab: {fileID: 2194875734644560750, guid: 972fde37ab47ac344aedb772c1d37f63, type: 3}
+  deerPrefab: {fileID: 2584475254883242621, guid: 7893230e9bd855e4c9c019bd1d34fdfe, type: 3}
   fantasyRoad: {fileID: 4892116045003648740}
   darkRoad: {fileID: 8158786277173011342}
   lowBoundMarker: {fileID: 5610340131056394010}
   highBoundMarker: {fileID: 1196553649425757498}
-  AICount: 5
   AIContainer: {fileID: 5995776337095607377}
 --- !u!1 &6163867031310354988
 GameObject:

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class CarMovement : MonoBehaviour
 {
@@ -39,12 +40,25 @@ public class CarMovement : MonoBehaviour
 
     [Header ("hp and points")]
     public int maxHealth;
-    int health;
     public int pointsToHeal;
+    public int obstacleDamage;
+
+    public float scoreStreakTime;
+
+    float lastScore;
+    int streakCount;
+
+    int health;
+    
     int score;
     int currentScore;
 
     Rigidbody rigid;
+
+    [Header ("UI")]
+    public GameObject scoreTextPrefab;
+    public Transform textPosition;
+    public Transform textParent;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +89,7 @@ public class CarMovement : MonoBehaviour
             canTrip = false;
             state = WorldState.FANTASY;
             road.swapEnviroment(state);
-            this.boostSpeed(state);
+            this.swapState(state);
             Invoke(nameof(exitTrip), tripTime);
         }
     }
@@ -92,7 +106,7 @@ public class CarMovement : MonoBehaviour
     void exitTrip() {
         state = WorldState.DARK;
         road.swapEnviroment(state);
-        this.boostSpeed(state);
+        this.swapState(state);
         Invoke(nameof(endCD), tripCooldown);
     }
 
@@ -104,7 +118,7 @@ public class CarMovement : MonoBehaviour
 
         rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, Input.GetAxis("Horizontal") * turnSpeed, 0f));
         rigid.AddForce(transform.right * speed, ForceMode.Force);
-        Debug.Log("FORWARD: " + transform.forward);
+        // Debug.Log("FORWARD: " + transform.forward);
 
         // Vector3 xzSpeed = speed * transform.right.normalized;
         // rigid.velocity = new Vector3(xzSpeed.x, rigid.velocity.y, xzSpeed.z);
@@ -114,31 +128,65 @@ public class CarMovement : MonoBehaviour
     }
 
   
-    public void boostSpeed(WorldState state) {
+    public void swapState(WorldState state) {
         if(state == WorldState.FANTASY) {
             speed *= speedIncrease;
             if(speed > maxSpeed) {
                 speed = maxSpeed;
             }
-        } else if(currentScore > pointsToHeal){
-            health += (int)(.5f * (currentScore - pointsToHeal));
-            if(health > maxHealth) {
-                health = maxHealth;
+
+            // ScoreText.SetActive(true);
+            // multiplierText.SetActive(true);
+            // newScoreText.SetActive(true);
+
+        } else {
+            if(currentScore > pointsToHeal){
+                health += (int)(.5f * (currentScore - pointsToHeal));
+                if(health > maxHealth) {
+                    health = maxHealth;
+                }
+
+                currentScore = 0;
             }
-        }
-        
+            // ScoreText.SetActive(false);
+            // multiplierText.SetActive(false);
+            // newScoreText.SetActive(false);
+        } 
     }
 
     public void hitThing(int value, WorldState state) {
         if(state == WorldState.FANTASY) {
-            currentScore += value;
-            score += value;
+            streakCount++;
+            Invoke(nameof(checkstreak), scoreStreakTime+.0001f);
+            lastScore = Time.time;
+            currentScore += value * streakCount;
+            score += value * streakCount;
+
+            showText(value * streakCount);
         } else {
             health -= value;
         }
+
+        int willHeal = (int)(.5f * (currentScore - pointsToHeal));
+        Debug.Log("SCORE: " + score + ", CURRENTSCORE " + currentScore + ", CURRENT STREAK" + streakCount + ", WILLHEAL " + willHeal + ", HEALTH" + health);
+        // ScoreText.text = ""+score;
+        // multiplierText.text = "x" + streakCount;
+
     }
 
-    //how hard I hit the
+    void showText(int amount) {
+        GameObject textThing = Instantiate(scoreTextPrefab, textPosition.position, Quaternion.identity, textParent);
+        textThing.GetComponent<TextMesh>().text = "+" + amount;
+    }
+
+    void checkstreak() {
+        if(Time.time - lastScore > scoreStreakTime) {
+            streakCount = 0;
+            // multiplierText.text = "";
+        }
+    }
+
+    //how hard I hit the thing
     public float getSpeedScalar() {
         return 1+(speed*maxForceBoost/maxSpeed);
     }
@@ -148,8 +196,6 @@ public class CarMovement : MonoBehaviour
         if(Physics.Raycast(transform.position, -transform.up, out hit, 200f, ~ignoreMe)) {
 
             // Debug.Log("HIT: " + hit.distance + ", " + hit.collider.gameObject.name);
-            
-
             float rayDirVel = Vector3.Dot(-transform.up, rigid.velocity);
 
             float x = hit.distance - distOffGround;
@@ -166,25 +212,20 @@ public class CarMovement : MonoBehaviour
     }
 
     public void carTorque() {
-        // Quaternion goal = Utils.Math.ShortestRotation(uprightRotationTarget, transform.rotation);
-
-
-        // Vector3 axis;
-        // float rotationDegrees;
-
-        // goal.ToAngleAxis(out rotationDegrees, out axis);
         float rotationDegrees = Quaternion.Angle(rigid.rotation, uprightRotationTarget);
 
-        Debug.Log("ROT: " + rigid.rotation + ", targ " + uprightRotationTarget + ", amountOfDeegs" + rotationDegrees);
+        // Debug.Log("ROT: " + rigid.rotation + ", targ " + uprightRotationTarget + ", amountOfDeegs" + rotationDegrees);
         Vector3 direction =  Vector3.Cross(Vector3.up, transform.up);
 
-        Debug.Log("DIRECTION: " + direction);
+        // Debug.Log("DIRECTION: " + direction);
 
         rigid.AddTorque((-direction * (rotationDegrees * Mathf.Deg2Rad * rotSpringStrength)) - (rigid.angularVelocity * rotSpringDamper));
     }
 
     void OnCollisionEnter(Collision collision) {
         if(((1 <<collision.gameObject.layer) & obstacleLayer) != 0) {
+            health -= obstacleDamage;
+
             Vector3 direction = transform.position - collision.gameObject.transform.position;
             direction.y = 0;
             rigid.AddForce(direction.normalized * 3.0f * (float)Mathf.Sqrt(speed) + Vector3.up * oppositeCollisionYForce, ForceMode.Impulse);
