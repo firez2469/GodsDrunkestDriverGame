@@ -18,18 +18,19 @@ public class AIController : MonoBehaviour
 
     [Header ("general")]
     public float idleTime;
+    LayerMask car;
 
     [Header ("DARK")]
     public float launchForce;
     public float yLaunchForce;
 
-    public int pointValue;
+    public int carDamage;
 
     [Header ("FANTASY")]
     public float dayLaunchForce;
     public float dayYLaunchForce;
 
-    public int carDamage;
+    public int pointValue;
 
     // Start is called before the first frame update
     void Awake()
@@ -70,6 +71,9 @@ public class AIController : MonoBehaviour
     void OnCollisionEnter(Collision collision) {
         if(collision.gameObject.name == "player" && Time.time - lastLaunch > launchCooldown) {
 
+            CarMovement player = collision.gameObject.GetComponent<CarMovement>();
+            int value = (state == WorldState.FANTASY) ? pointValue : carDamage;
+            player.hitThing(value, state);
             //send damage/score to player
 
             lastLaunch = Time.time;
@@ -81,7 +85,7 @@ public class AIController : MonoBehaviour
 
             Vector3 launchVec = transform.position - collision.gameObject.transform.position;
             launchVec.y = 0;
-            launchVec = launchVec.normalized * launchStrength;
+            launchVec = launchVec.normalized * launchStrength * player.getSpeedScalar();;
             launchVec.y = yLaunchStrength;
 
             agent.enabled = false;
@@ -97,6 +101,10 @@ public class AIController : MonoBehaviour
         } else {
             //swap to fantasy skin
         }
+    }
+
+    public int getPointDamage() {
+        return (state == WorldState.FANTASY) ? pointValue : carDamage;
     }
 
 }

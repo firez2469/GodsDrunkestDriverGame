@@ -19,6 +19,8 @@ public class Road : MonoBehaviour
     public GameObject lowBoundMarker;
     public GameObject highBoundMarker;
 
+    public int AICount;
+
     Vector3 lowBound;
     Vector3 highBound;
 
@@ -41,7 +43,7 @@ public class Road : MonoBehaviour
     public void spawnAI() {
         List<Vector3> spawns = new List<Vector3>();
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < AICount; i++) {
             bool foundValid = false;
             while(!foundValid) { // this is a bit silly D:
                 Vector3 spawnLocation = new Vector3(Random.Range(lowBound.x, highBound.x), lowBound.y, Random.Range(lowBound.z, highBound.z));
@@ -58,21 +60,24 @@ public class Road : MonoBehaviour
             }
         }
 
-        //will abstract later am lazy
-        AIController human = Instantiate(humanPrefab, spawns[0], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
-        ai.Add(human);
-        human.swapEnviroment(state);
-        human.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
+        for(int i = 0; i < AICount; i++) {
+            GameObject willUse;
+            int selected = Random.Range(0,3);
+            if(selected == 0) {
+                willUse = humanPrefab;
+            } else if(selected == 1) {
+                willUse = rabbitPrefab;
+            } else {
+                willUse = deerPrefab;
+            }
 
-        AIController rabbit = Instantiate(rabbitPrefab, spawns[1], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
-        ai.Add(rabbit);
-        rabbit.swapEnviroment(state);
-        rabbit.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
 
-        AIController deer = Instantiate(deerPrefab, spawns[2], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
-        ai.Add(deer);
-        deer.swapEnviroment(state);
-        deer.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
+            AIController newAI = Instantiate(willUse, spawns[i], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
+            ai.Add(newAI);
+            newAI.swapEnviroment(state);
+            newAI.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
+        }
+        
     }
 
     public void swapEnviroment(WorldState time) {

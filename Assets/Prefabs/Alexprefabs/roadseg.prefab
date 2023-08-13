@@ -941,7 +941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8901556601689080743}
   - component: {fileID: 1973695723127881361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LampPostRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2247,7 +2247,7 @@ GameObject:
   - component: {fileID: 6343957757387942907}
   - component: {fileID: 891295719290055264}
   - component: {fileID: 577520885357041703}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2529,7 +2529,7 @@ GameObject:
   - component: {fileID: 3686267368513545067}
   - component: {fileID: 5747307672283338473}
   - component: {fileID: 7786451656974477334}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3540,7 +3540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1444408068478933082}
   - component: {fileID: 543532427277422020}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NavMesh Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3712,7 +3712,7 @@ GameObject:
   - component: {fileID: 781883542273635084}
   - component: {fileID: 2481776129645708914}
   - component: {fileID: 8068607469614908574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LampPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3967,7 +3967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442054598083633837}
   - component: {fileID: 1994894090465282918}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NavMesh Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4692,7 +4692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4937536171265774350}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: flowers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5506,7 +5506,7 @@ GameObject:
   - component: {fileID: 7827738346777302235}
   - component: {fileID: 120764214845151184}
   - component: {fileID: 4474404771702974458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5721,13 +5721,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034820269033375853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DayWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1034820269033375853
 Transform:
   m_ObjectHideFlags: 0
@@ -6419,7 +6419,7 @@ GameObject:
   - component: {fileID: 6511553692628540240}
   - component: {fileID: 3553801073718494634}
   - component: {fileID: 6805693388400502225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7793,6 +7793,7 @@ MonoBehaviour:
   darkRoad: {fileID: 8158786277173011342}
   lowBoundMarker: {fileID: 5610340131056394010}
   highBoundMarker: {fileID: 1196553649425757498}
+  AICount: 5
   AIContainer: {fileID: 5995776337095607377}
 --- !u!1 &6163867031310354988
 GameObject:
@@ -8467,7 +8468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1621606921181878831}
   - component: {fileID: 5776237613590517156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LampPostLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9008,7 +9009,7 @@ GameObject:
   - component: {fileID: 2917812720667191979}
   - component: {fileID: 8481736024075365007}
   - component: {fileID: 1169734141723944223}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LampPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9795,7 +9796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7753426591749088122
 Transform:
   m_ObjectHideFlags: 0

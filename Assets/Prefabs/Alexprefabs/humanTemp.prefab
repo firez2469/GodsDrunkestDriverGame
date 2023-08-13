@@ -125,10 +125,10 @@ MonoBehaviour:
   idleTime: 3
   launchForce: 16
   yLaunchForce: 4
-  pointValue: 0
+  carDamage: 25
   dayLaunchForce: 3
   dayYLaunchForce: 25
-  carDamage: 25
+  pointValue: 5
 --- !u!195 &6434560024693492871
 NavMeshAgent:
   m_ObjectHideFlags: 0
