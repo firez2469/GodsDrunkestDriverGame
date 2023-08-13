@@ -1239,13 +1239,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadPrefab: {fileID: 6071775404091479828, guid: 51fed2851640b6c4b970d20c83c017b5, type: 3}
-  darkVolume: {fileID: 0}
-  fantasyVolume: {fileID: 1006924047}
-  player: {fileID: 1647088096}
-  carcamms: {fileID: 429899099}
+  backCliff: {fileID: 0}
   maxSegments: 6
   initialSegments: 4
   AISpawnDistance: 4
+  darkVolume: {fileID: 1006924047}
+  fantasyVolume: {fileID: 1006924047}
+  carcamms: {fileID: 429899099}
+  stateSwapsTillSpawn: 0
+  initialCount: 0
+  countMultiplier: 0
+  maxCount: 0
 --- !u!4 &365461871
 Transform:
   m_ObjectHideFlags: 0
@@ -5750,8 +5754,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   maxSpeed: 250
-  maxForceBoost: 6
+  speedIncrease: 0
   turnSpeed: 1
+  friction: 0
+  distOffGround: 0
+  ignoreMe:
+    serializedVersion: 2
+    m_Bits: 0
+  springStrength: 0
+  stringDamper: 0
+  rotSpringStrength: 0
+  rotSpringDamper: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxForceBoost: 6
+  oppositeForce: 0
+  oppositeCollisionYForce: 0
+  collisionCooldown: 0
+  road: {fileID: 0}
+  tripTime: 0
+  tripCooldown: 0
   maxHealth: 100
   pointsToHeal: 10
 --- !u!4 &1647088097
