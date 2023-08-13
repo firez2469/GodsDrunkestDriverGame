@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarMovement : MonoBehaviour
 {
@@ -38,11 +39,9 @@ public class CarMovement : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if(Input.GetKey(KeyCode.A)) {
-            rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, -turnSpeed, 0f));
-        } else if(Input.GetKey(KeyCode.D)) {
-            rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, turnSpeed, 0f));
-        }
+
+        rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0f, Input.GetAxis("Horizontal") * turnSpeed, 0f));
+        
         rigid.velocity = speed * transform.right.normalized;
     }
 
