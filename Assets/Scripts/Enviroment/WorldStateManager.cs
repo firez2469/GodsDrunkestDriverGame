@@ -15,6 +15,7 @@ public class WorldStateManager : MonoBehaviour
     private Camera fantasyCamera;
     [SerializeField]
     private WorldState currentState;
+    [SerializeField] public GameObject magicPotion;
     
     // Start is called before the first frame update
     void Start()
@@ -32,12 +33,14 @@ public class WorldStateManager : MonoBehaviour
                 darkVolume.gameObject.SetActive(true); 
                 darkCamera.gameObject.SetActive(true);
                 fantasyCamera.gameObject.SetActive(false);
+                magicPotion.SetActive(false);
                 break;
             case WorldState.FANTASY:
                 fantasyVolume.gameObject.SetActive(true); 
                 darkVolume.gameObject.SetActive(false);
                 darkCamera.gameObject.SetActive(false);
                 fantasyCamera.gameObject.SetActive(true);
+                magicPotion.SetActive(true);
                 break;
         }
     }
