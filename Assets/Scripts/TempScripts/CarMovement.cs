@@ -7,8 +7,15 @@ public class CarMovement : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
+    public float speedIncrease;
 
     public float maxForceBoost;
+
+    public RoadsController road;
+    public float tripTime;
+    public float tripCooldown;
+    bool canTrip;
+    WorldState state;
 
     public float turnSpeed;
 
@@ -30,12 +37,32 @@ public class CarMovement : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         rigid.freezeRotation = true;
+
+        canTrip = true;
+        state = WorldState.DARK;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space) && canTrip) {
+            canTrip = false;
+            state = WorldState.FANTASY;
+            road.swapEnviroment(state);
+            this.boostSpeed(state);
+            Invoke(nameof(exitTrip), tripTime);
+        }
+    }
+
+    void exitTrip() {
+        state = WorldState.DARK;
+        road.swapEnviroment(state);
+        this.boostSpeed(state);
+        Invoke(nameof(endCD), tripCooldown);
+    }
+
+    void endCD() {
+        canTrip = true;
     }
 
     void FixedUpdate() {
@@ -47,7 +74,7 @@ public class CarMovement : MonoBehaviour
 
     public void boostSpeed(WorldState state) {
         if(state == WorldState.FANTASY) {
-            speed *= 1.1f;
+            speed *= speedIncrease;
             if(speed > maxSpeed) {
                 speed = maxSpeed;
             }
