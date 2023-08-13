@@ -1425,6 +1425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1195611263}
   - component: {fileID: 1195611264}
+  - component: {fileID: 1195611265}
   m_Layer: 0
   m_Name: Worldmanger
   m_TagString: Untagged
@@ -1469,6 +1470,20 @@ MonoBehaviour:
   darkCamera: {fileID: 1739913112}
   fantasyCamera: {fileID: 311903567}
   currentState: 0
+--- !u!114 &1195611265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195611262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9847522ff2475a49bfff5c20c12e3bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  darkVolume: {fileID: 1995297642}
+  tiredness: 0
 --- !u!1 &1205910358
 GameObject:
   m_ObjectHideFlags: 0
