@@ -31,6 +31,7 @@ public class MenuManager : MonoBehaviour
     {
         if (Cursor.lockState != CursorLockMode.None)
         {
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
             
