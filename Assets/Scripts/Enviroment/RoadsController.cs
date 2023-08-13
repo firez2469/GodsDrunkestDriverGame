@@ -43,8 +43,8 @@ public class RoadsController : MonoBehaviour
     }
 
     //will handle enviroment swap for all AI and road segments
-    public void swapEnviroment() {
-        state = (state == WorldState.FANTASY) ? WorldState.DARK : WorldState.FANTASY;
+    public void swapEnviroment(WorldState time) {
+        state = time;
 
         if(state == WorldState.FANTASY) {
             darkVolume.SetActive(false);
@@ -67,10 +67,6 @@ public class RoadsController : MonoBehaviour
         //     Invoke(nameof(extendRoad), 5.0f);
         //     readyForNextRoad = false;
         // }
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            swapEnviroment();
-            player.boostSpeed(state);
-        }
         
     }
 

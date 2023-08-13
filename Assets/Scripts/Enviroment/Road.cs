@@ -74,6 +74,7 @@ public class Road : MonoBehaviour
 
             AIController newAI = Instantiate(willUse, spawns[i], Quaternion.identity, AIContainer.transform).GetComponent<AIController>();
             ai.Add(newAI);
+            //help
             newAI.swapEnviroment(state);
             newAI.startWander(lowBound.x, highBound.x, lowBound.z, highBound.z);
         }
